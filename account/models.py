@@ -16,7 +16,7 @@ class Student(models.Model):
     name=models.CharField(max_length=250)
     roll_no = models.CharField(max_length=50)
     email = models.EmailField(max_length=254)
-    phone = models.CharField(max_length=10)
+    phone = models.IntegerField()
     student_profile_pic = models.ImageField(upload_to="classroom/student_profile_pic",blank=True)
 
     # def get_absolute_url(self):
@@ -32,7 +32,7 @@ class Teacher(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True,related_name='Teacher')
     name = models.CharField(max_length=250)
     email = models.EmailField(max_length=254)
-    phone = models.CharField(max_length=10)
+    phone = models.IntegerField()
     teacher_profile_pic = models.ImageField(upload_to="classroom/teacher_profile_pic",blank=True)
     class_students = models.ManyToManyField(Student)
 
