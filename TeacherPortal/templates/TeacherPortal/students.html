@@ -1,0 +1,65 @@
+{% extends 'TeacherPortal/base.html' %}
+{% load static %}
+
+{% block title %} Students {% endblock title %}
+
+{% block link %} <link rel="stylesheet" href="{% static './TeacherPortal/css/students.css' %}"> {% endblock link %}
+
+{% block content %}
+    <section>
+        <div id="students-container">
+            <div id="add-container">
+                <div style="font-size: 2em; color:green;">
+                    Students
+                </div>
+                <div class="add-student-icon">
+                    <button id="add-student-icon" class="btn border-0" data-bs-toggle="modal" data-bs-target="#addStudentModal"><img style="width: 30px; height: 30px; border-radius: 50%;" src="{% static './TeacherPortal/images/student.png' %}" alt=""></button>
+                </div>
+            </div>
+            {% for student in class_detail.student.all %}
+              <div id="show-students">
+                  <div id="user-profile-image">
+                      <button class="btn border-0">
+                          <img  style="width: 30px; height: 30px; border-radius: 50%;"
+                          src="{% static './TeacherPortal/images/user.png' %}"
+                          alt="Profile"
+                          />
+                      </button>
+                  </div>
+                  <div id="student-name">
+                      {{student.name}}
+                  </div>
+                  <div>
+                      <div class="options">
+                          <button id="options" class="btn border-0"><img style="width: 30px; height: 30px; border-radius: 50%;" src="{% static './TeacherPortal/images/three-dots.png' %}" alt=""></button>
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section>
+        <div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="addStudentModalLabel">Add Student</h5>
+                </div>
+                <div class="modal-body">
+                  <form action="" method="post" id="add-student-form">
+                    {% csrf_token %}
+                    <input type="email" placeholder="email" name="email">
+                    <br>
+                    <input type="text" placeholder="Enrollment No" name="roll_no">
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn border-0" data-bs-dismiss="modal">Close</button>
+                  <input type="submit" value="Add Student" class="btn btn-primary" form="add-student-form">
+                </div>
+              </div>
+            </div>
+          </div>
+    </section>
+{% endblock content %}
