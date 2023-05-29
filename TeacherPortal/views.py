@@ -8,7 +8,7 @@ from django.contrib import messages
 
 # Create your views here.
 def teacherDetail(request):
-    teacher = Teacher.objects.get(user=request.user)
+    teacher = Teacher.objects.filter(user=request.user).first()
     teacher_name = request.user.username
     if request.method == 'POST':
         if request.POST.get('create_class'):
@@ -46,7 +46,7 @@ def logout(request):
 
 
 def classDetail(request,id):
-    teacher = Teacher.objects.get(user=request.user)
+    teacher = Teacher.objects.filter(user=request.user).first()
     context = {
         'class_detail': get_object_or_404(CreateClass, pk=id),
         'teacher':teacher,
@@ -56,12 +56,12 @@ def classDetail(request,id):
     return render(request,'TeacherPortal/class_detail.html',context)
 
 def students(request,id):
-    teacher = Teacher.objects.get(user=request.user)
+    teacher = Teacher.objects.filter(user=request.user).first()
     if request.method == 'POST':
         email = request.POST['email']
         roll_no = request.POST['roll_no']
         if Student.objects.filter(email=email,roll_no=roll_no).exists():
-            student = Student.objects.get(email=email,roll_no=roll_no)
+            student = Student.objects.filter(email=email,roll_no=roll_no).first()
             current_class = CreateClass.objects.get(teacher=teacher,pk=id)
             current_class.student.add(student)
             current_class.save()
@@ -78,7 +78,7 @@ def students(request,id):
     return render(request,'TeacherPortal/students.html',context)
 
 def classwork(request,id):
-    teacher = Teacher.objects.get(user=request.user)
+    teacher = Teacher.objects.filter(user=request.user).first()
     classroom = get_object_or_404(CreateClass,pk=id)
     
     if request.method == 'POST':
